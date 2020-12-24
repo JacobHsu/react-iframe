@@ -1,5 +1,5 @@
 {
-  "name": "iframe-backend-app",
+  "name": "iframe-frontend-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,12 +8,11 @@
     "@testing-library/user-event": "^12.1.10",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-iframe-comm": "^1.2.2",
     "react-scripts": "4.0.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "set PORT=3030 && react-scripts start",
+    "start": "set PORT=3003 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
