@@ -1,5 +1,6 @@
 import './App.css';
 import IframeComm from "react-iframe-comm";
+import { isValidAddress } from './Validate'
 
 function App() {
   const mainUrl = "http://localhost:3003/" // npm start frontend first
@@ -15,9 +16,27 @@ function App() {
         top: 'auto',
         height: height,
       }}
-      postMessageData={"test99 hello iframe"}
+      postMessageData={"test hello iframe"}
       handleReady={()=>{
-        console.log("test99 onReady");
+        console.log("[backend] IframeComm handleReady");
+      }}
+      handleReceiveMessage={(event)=>{
+        if (event.data.method) {
+          var iframe = document.getElementById('iframe').contentWindow
+
+          console.log("[backend] handleReceiveMessage "+JSON.stringify(event.data))
+
+          switch (event.data.method) {
+            case "getAddress":
+              const poaAddress = localStorage.getItem('poaAddress')
+              if (poaAddress && isValidAddress(poaAddress)) {
+                iframe.postMessage({method:"returnAddress", data:poaAddress}, '*');
+              } else {
+                iframe.postMessage({method:"returnAddress", data:"EMPTY"}, '*');
+              }
+              break
+          }
+        }
       }}
       />
     </div>
