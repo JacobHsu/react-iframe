@@ -6,6 +6,7 @@ function App() {
   useEffect(
     () => {
       window.addEventListener('message', (event)=>{
+        // event.data : "test hello iframe" only string
         if (event.data.method) {
           console.log("[front] addEventListener "+JSON.stringify(event.data))
 
@@ -18,7 +19,7 @@ function App() {
           }
         }
       }, false);
-      window.parent.postMessage({method:"getAddress", data:""}, '*');
+      window.parent.postMessage({method:"getAddress", data:"子傳父"}, '*');
     },[]
   )
 
@@ -27,7 +28,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          front 30
         </p>
         <a
           className="App-link"

@@ -1,17 +1,21 @@
 # react-iframe
 
+[window.postMessage](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/postMessage)
+
+子傳父
 
 iframe-frontend-app\src\App.js 子
 
 ```js
   useEffect(
     () => {
-      window.parent.postMessage({method:"getWallet", data:""}, '*');
+      window.parent.postMessage({method:"getAddress", data:"子傳父"}, '*');
     },[]
   )
 ```
 
 iframe-backend-app\src\Home.js 父
+> handleReceiveMessage()收
 
 ```js
 const mainUrl = "http://localhost:3003/" // frontend 
@@ -20,15 +24,36 @@ const mainUrl = "http://localhost:3003/" // frontend
     id: "iframe",
     src: mainUrl,
     handleReceiveMessage={(event)=>{
-    if (event.data.method) {
-        var iframe = document.getElementById('iframe').contentWindow
+        if (event.data.method) {
+          var iframe = document.getElementById('iframe').contentWindow
 
-        console.log("[backend] handleReceiveMessage "+JSON.stringify(event.data))
-        // [backend] handleReceiveMessage {"method":"getWallet","data":""}
+          console.log("[backend] handleReceiveMessage "+JSON.stringify(event.data)) // 接收子的參數
 
-        iframe.postMessage({method:"returnAddress", data:"EMPTY"}, '*');
-    }
+          switch (event.data.method) {
+            case "getAddress":
+              console.log('parent getAddress:', event.data.data) // parent getAddress: 子傳父
+              break
+          }
+        }
     }}
+```
+
+父傳子
+
+iframe-backend-app\src\Home.js 父
+
+```js
+ <IframeComm
+      attributes={{
+        id: "iframe",
+
+      }}
+      handleReceiveMessage={(event)=>{
+        if (event.data.method) {
+          var iframe = document.getElementById('iframe').contentWindow
+           iframe.postMessage({method:"returnAddress", data:"父傳子"}, '*');
+          }
+        }
 ```
 
 iframe-frontend-app\src\App.js 子
