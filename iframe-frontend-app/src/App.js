@@ -5,7 +5,9 @@ import './App.css';
 function App() {
   useEffect(
     () => {
+
       window.addEventListener('message', (event)=>{
+        console.log(event.data) // '[postMessageData] test hello iframe' 只在parent console 可視
         // event.data : "test hello iframe" only string
         if (event.data.method) {
           console.log("[front] addEventListener "+JSON.stringify(event.data))
@@ -29,6 +31,9 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           front 30
+        </p>
+        <p>
+          :3003 child , :3030 parent
         </p>
         <a
           className="App-link"

@@ -1,5 +1,26 @@
 # react-iframe
 
+[react-iframe-comm](https://www.npmjs.com/package/react-iframe-comm)  
+
+parent iframe 
+
+```html
+   const postMessageData = "hello iframe";
+  <IframeComm
+            attributes={attributes}
+            postMessageData={postMessageData}
+```
+
+child App.js
+
+```js
+  useEffect(
+    () => {
+      window.addEventListener('message', (event)=>{
+      console.log(event.data) // '[postMessageData] test hello iframe' 只在parent console 可視
+```
+
+
 [window.postMessage](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/postMessage)
 
 子傳父

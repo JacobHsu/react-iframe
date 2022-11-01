@@ -16,11 +16,12 @@ function App() {
         top: 'auto',
         height: height,
       }}
-      postMessageData={"test hello iframe"}
+      postMessageData={"[postMessageData] test hello iframe"}
       handleReady={()=>{
-        console.log("[backend] IframeComm handleReady");
+        console.log("[backend parent] IframeComm handleReady");
       }}
       handleReceiveMessage={(event)=>{
+
         if (event.data.method) {
           var iframe = document.getElementById('iframe').contentWindow
 
